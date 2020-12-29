@@ -1,13 +1,22 @@
 import React from 'react';
-import Recipe from './components/Recipe';
+import { RecipeContainer } from './components/RecipeContainer';
 import './App.css';
 
 type AppProps = {};
-type AppState = {};
+type AppState = {
+  selectedRecipe: string
+};
 
 export default class App extends React.Component<AppProps, AppState> {
+  state: AppState = {
+    selectedRecipe: 'pizza'
+  };
+  
   handleClick = (e: React.FormEvent<HTMLButtonElement>): void => {
-    alert(e.currentTarget.value);
+    const recipe = e.currentTarget.value;
+    this.setState((_state) => ({
+      selectedRecipe: recipe,
+    }));
   };
 
   render() {
@@ -19,7 +28,8 @@ export default class App extends React.Component<AppProps, AppState> {
         </header>
         <button onClick={this.handleClick} value="pizza">Pizza Napoletana</button>
         <button onClick={this.handleClick} value="bread">Bread</button>
-        <Recipe water={58} salt={2.5} />
+        <button onClick={this.handleClick} value="focaccia">Focaccia alle olive</button>
+        <RecipeContainer recipe={this.state.selectedRecipe} />
       </div>
     );
   }
