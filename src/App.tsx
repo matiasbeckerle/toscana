@@ -1,34 +1,46 @@
 import React from 'react';
 import { RecipeContainer } from './components/RecipeContainer';
+import { Recipe } from './models/recipe';
 import './App.css';
 
-type AppProps = {};
+type AppProps = {
+  recipes: Array<Recipe>
+};
+
 type AppState = {
-  selectedRecipe: string
+  selectedRecipe: Recipe
 };
 
 export default class App extends React.Component<AppProps, AppState> {
   state: AppState = {
-    selectedRecipe: 'pizza'
+    selectedRecipe: this.props.recipes[0]
   };
-  
+
   pickRecipe = (e: React.FormEvent<HTMLButtonElement>): void => {
-    const recipe = e.currentTarget.value;
+    const recipeCode = e.currentTarget.value;
+    const recipe = this.props.recipes.find(({ code }) => code === recipeCode);
+    if (!recipe) return;
     this.setState((_state) => ({
       selectedRecipe: recipe,
     }));
   };
 
   render() {
+    const recipes = this.props.recipes.map((recipe, _index) => {
+      return (
+        <li key={recipe.code}>
+          <button onClick={this.pickRecipe} value={recipe.code}>{recipe.name}</button>
+        </li>
+      );
+    });
+
     return (
       <div className="App">
         <header className="App-header">
           <h1>Toscana</h1>
           <h2>Dough calculator</h2>
         </header>
-        <button onClick={this.pickRecipe} value="pizza">Pizza Napoletana</button>
-        <button onClick={this.pickRecipe} value="bread">Bread</button>
-        <button onClick={this.pickRecipe} value="focaccia">Focaccia alle olive</button>
+        {recipes}
         <RecipeContainer recipe={this.state.selectedRecipe} />
       </div>
     );
