@@ -12,7 +12,7 @@ export default class App extends React.Component<AppProps, AppState> {
     selectedRecipe: 'pizza'
   };
   
-  handleClick = (e: React.FormEvent<HTMLButtonElement>): void => {
+  pickRecipe = (e: React.FormEvent<HTMLButtonElement>): void => {
     const recipe = e.currentTarget.value;
     this.setState((_state) => ({
       selectedRecipe: recipe,
@@ -26,9 +26,9 @@ export default class App extends React.Component<AppProps, AppState> {
           <h1>Toscana</h1>
           <h2>Dough calculator</h2>
         </header>
-        <button onClick={this.handleClick} value="pizza">Pizza Napoletana</button>
-        <button onClick={this.handleClick} value="bread">Bread</button>
-        <button onClick={this.handleClick} value="focaccia">Focaccia alle olive</button>
+        <button onClick={this.pickRecipe} value="pizza">Pizza Napoletana</button>
+        <button onClick={this.pickRecipe} value="bread">Bread</button>
+        <button onClick={this.pickRecipe} value="focaccia">Focaccia alle olive</button>
         <RecipeContainer recipe={this.state.selectedRecipe} />
       </div>
     );

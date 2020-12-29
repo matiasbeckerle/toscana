@@ -1,10 +1,5 @@
 import React from 'react';
-
-export type Recipe = {
-  code: string,
-  water: number,
-  salt: number
-};
+import { Recipe } from './../models/recipe';
 
 type RecipeProps = {
   recipe: string
